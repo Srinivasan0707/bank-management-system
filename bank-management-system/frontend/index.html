@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank - Banking Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">S</div>
+                <span class="logo-text">SecureBank</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#accounts" class="nav-link">Accounts</a></li>
+                <li><a href="#transactions" class="nav-link">Transactions</a></li>
+                <li><a href="#customers" class="nav-link">Customers</a></li>
+            </ul>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="auth-page">
+        <div class="auth-container">
+            <div class="auth-visual">
+                <div class="visual-content">
+                    <h1 class="visual-title">Welcome to SecureBank</h1>
+                    <p class="visual-subtitle">Your trusted partner in financial management</p>
+                    <div class="visual-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$2.5B+</div>
+                            <div class="stat-label">Assets Under Management</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-form-container">
+                <div class="auth-form">
+                    <h2 class="form-title">Sign In</h2>
+                    <p class="form-subtitle">Access your account dashboard</p>
+                    <form onsubmit="login(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Sign In</button>
+                    </form>
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="registerPage" class="auth-page" style="display: none;">
+        <div class="auth-container">
+            <div class="auth-visual">
+                <div class="visual-content">
+                    <h1 class="visual-title">Join SecureBank</h1>
+                    <p class="visual-subtitle">Start your journey towards financial freedom</p>
+                </div>
+            </div>
+            <div class="auth-form-container">
+                <div class="auth-form">
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Fill in your details to get started</p>
+                    <form onsubmit="register(event)">
+                        <div class="form-group">
+                            <label for="regName">Full Name</label>
+                            <input type="text" id="regName" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email Address</label>
+                            <input type="email" id="regEmail" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regPhone">Phone Number</label>
+                            <input type="tel" id="regPhone" placeholder="+1 234 567 8900" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regAddress">Address</label>
+                            <input type="text" id="regAddress" placeholder="123 Main Street, City" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" placeholder="Create a strong password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Create Account</button>
+                    </form>
+                    <div class="form-footer">
+                        <p>Already have an account? <a href="#" onclick="showLogin()">Sign in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <main id="dashboard" class="dashboard" style="display: none;">
+        <!-- Home Section -->
+        <section id="home" class="section active-section">
+            <div class="section-header">
+                <h1 class="section-title">Dashboard Overview</h1>
+                <p class="section-subtitle">Welcome back, <span id="userName">User</span></p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card stat-card">
+                    <div class="card-icon">💰</div>
+                    <div class="card-content">
+                        <div class="card-label">Total Balance</div>
+                        <div class="card-value" id="totalBalance">$0.00</div>
+                        <div class="card-change positive">+2.5% from last month</div>
+                    </div>
+                </div>
+                
+                <div class="card stat-card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-content">
+                        <div class="card-label">Total Customers</div>
+                        <div class="card-value" id="totalCustomers">0</div>
+                        <div class="card-change positive">+5 new this week</div>
+                    </div>
+                </div>
+                
+                <div class="card stat-card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <div class="card-label">Transactions Today</div>
+                        <div class="card-value" id="todayTransactions">0</div>
+                        <div class="card-change">Updated just now</div>
+                    </div>
+                </div>
+                
+                <div class="card stat-card">
+                    <div class="card-icon">🏦</div>
+                    <div class="card-content">
+                        <div class="card-label">Active Accounts</div>
+                        <div class="card-value" id="activeAccounts">0</div>
+                        <div class="card-change positive">100% active rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="card recent-transactions">
+                    <h3 class="card-title">Recent Transactions</h3>
+                    <div id="recentTransactionsList" class="transactions-list">
+                        <div class="empty-state">No recent transactions</div>
+                    </div>
+                </div>
+                
+                <div class="card quick-actions">
+                    <h3 class="card-title">Quick Actions</h3>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="showSection('accounts')">
+                            <span class="action-icon">➕</span>
+                            <span class="action-text">New Account</span>
+                        </button>
+                        <button class="action-btn" onclick="showSection('transactions')">
+                            <span class="action-icon">💸</span>
+                            <span class="action-text">New Transaction</span>
+                        </button>
+                        <button class="action-btn" onclick="showSection('customers')">
+                            <span class="action-icon">👤</span>
+                            <span class="action-text">Add Customer</span>
+                        </button>
+                        <button class="action-btn" onclick="loadDashboardData()">
+                            <span class="action-icon">🔄</span>
+                            <span class="action-text">Refresh Data</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accounts Section -->
+        <section id="accounts" class="section">
+            <div class="section-header">
+                <h1 class="section-title">Account Management</h1>
+                <button class="btn-primary" onclick="showModal('accountModal')">Create New Account</button>
+            </div>
+            
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Account Number</th>
+                                <th>Customer Name</th>
+                                <th>Account Type</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountsTableBody">
+                            <tr>
+                                <td colspan="6" class="empty-state">No accounts found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transactions Section -->
+        <section id="transactions" class="section">
+            <div class="section-header">
+                <h1 class="section-title">Transaction History</h1>
+                <button class="btn-primary" onclick="showModal('transactionModal')">New Transaction</button>
+            </div>
+            
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>From Account</th>
+                                <th>To Account</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-state">No transactions found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section id="customers" class="section">
+            <div class="section-header">
+                <h1 class="section-title">Customer Management</h1>
+                <button class="btn-primary" onclick="showModal('customerModal')">Add New Customer</button>
+            </div>
+            
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTableBody">
+                            <tr>
+                                <td colspan="6" class="empty-state">No customers found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Account</h2>
+                <button class="modal-close" onclick="closeModal('accountModal')">&times;</button>
+            </div>
+            <form onsubmit="createAccount(event)">
+                <div class="form-group">
+                    <label for="accountCustomerId">Customer</label>
+                    <select id="accountCustomerId" required>
+                        <option value="">Select Customer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="accountType">Account Type</label>
+                    <select id="accountType" required>
+                        <option value="SAVINGS">Savings Account</option>
+                        <option value="CHECKING">Checking Account</option>
+                        <option value="BUSINESS">Business Account</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="initialBalance">Initial Balance</label>
+                    <input type="number" id="initialBalance" step="0.01" min="0" placeholder="0.00" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>New Transaction</h2>
+                <button class="modal-close" onclick="closeModal('transactionModal')">&times;</button>
+            </div>
+            <form onsubmit="createTransaction(event)">
+                <div class="form-group">
+                    <label for="transactionType">Transaction Type</label>
+                    <select id="transactionType" onchange="toggleTransactionFields()" required>
+                        <option value="DEPOSIT">Deposit</option>
+                        <option value="WITHDRAWAL">Withdrawal</option>
+                        <option value="TRANSFER">Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fromAccountId">From Account</label>
+                    <select id="fromAccountId" required>
+                        <option value="">Select Account</option>
+                    </select>
+                </div>
+                <div class="form-group" id="toAccountGroup" style="display: none;">
+                    <label for="toAccountId">To Account</label>
+                    <select id="toAccountId">
+                        <option value="">Select Account</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Amount</label>
+                    <input type="number" id="transactionAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionDescription">Description</label>
+                    <textarea id="transactionDescription" rows="3" placeholder="Transaction details (optional)"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Process Transaction</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Customer</h2>
+                <button class="modal-close" onclick="closeModal('customerModal')">&times;</button>
+            </div>
+            <form onsubmit="createCustomer(event)">
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+                    <input type="text" id="customerName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone</label>
+                    <input type="tel" id="customerPhone" placeholder="+1 234 567 8900" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Address</label>
+                    <textarea id="customerAddress" rows="3" placeholder="123 Main Street, City, State, ZIP" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Add Customer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
