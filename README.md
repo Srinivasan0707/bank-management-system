@@ -1,6 +1,6 @@
 # 🏦 Bank Management System
 
-A professional, full-stack Bank Management System built with **HTML, CSS, JavaScript** frontend and **Spring Boot, Java, MySQL** backend.
+A professional, full-stack Bank Management System built with **HTML, CSS, JavaScript** Frontend and **Spring Boot, Java, MySQL** Backend.
 
 ## 📋 Table of Contents
 - [Features](#features)
